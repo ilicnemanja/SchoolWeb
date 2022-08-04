@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Exam>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3 mt-4">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-muted">Exam List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Exam" asp-action="Create"><i class="bi bi-plus-circle"></i> &nbsp; Create New Exam</a>
+        </div>
+        
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped mt-3" style="width: 100%">
+            <thead>
+                <tr class="table-dark">
+                    <th>Subject</th>
+                    <th>Student Name</th>
+                    <th>Student Index</th>
+                    <th>Grade</th>
+                    <th>Action Update</th>
+                    <th>Action Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr class="table-light">
+                        <td width="15%">@obj.Subject.Name</td>
+                        <td width="15%">@obj.Student.FirstName @obj.Student.LastName</td>
+                        <td width="15%">@obj.StudentID</td>
+                        <td width="15%">@obj.Grade</td>
+                        <td width="20%">
+                            <div class="w-100 btn-group" role="group">
+                                <a class="btn btn-outline-success mx-2" asp-controller="Exam" asp-action="Edit" asp-route-id="@obj.ID"><i class="bi bi-pencil-square"></i> Edit</a>
+                            </div>
+                        </td>
+                        <td width="20%">
+                            <form method="POST" action="Delete" class="w-100 btn-group" role="group">
+                                <button method type="submit" class="btn btn-outline-danger mx-2" onclick="deleteConfirmation(event)" asp-controller="Exam" asp-action="Delete" asp-route-id="@obj.ID"><i class="bi bi-trash-fill"></i> Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

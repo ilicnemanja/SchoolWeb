@@ -1,0 +1,35 @@
+﻿@model List<Exam>
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container p-3 mt-4">
+    <div class="row pt-4">
+        <div class="col-6">
+            <a class="btn btn-primary" asp-controller="Student" asp-action="Index"><i class="bi bi-backspace-fill"></i> &nbsp; Back to Student List</a>
+        </div>
+        <div class="col-6 text-end">
+            <h1 class="text-muted">Exams Results</h1>
+        </div>
+        
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped mt-3" style="width: 100%">
+            <thead>
+                <tr class="table-dark">
+                    <th>Subject Name</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr class="table-light">
+                        <td width="50%">@obj.Subject.Name</td>
+                        <td width="50%">@obj.Grade</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
