@@ -68,6 +68,11 @@ namespace SchoolWeb.Controllers
                 return View(student);
             }
 
+            if (student.ID.Contains("/"))
+            {
+                student.ID = student.ID.Replace("/", "-");
+            }
+
             if (ModelState.IsValid)
             {
                 _db.Add(student);
@@ -148,10 +153,10 @@ namespace SchoolWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(string ID)
         {
-            if (_db.Students == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Students'  is null.");
-            }
+            //if (_db.Students == null)
+            //{
+            //    return Problem("Entity set 'ApplicationDbContext.Students'  is null.");
+            //}
             var student = _db.Students.Find(ID);
             if (student != null)
             {
@@ -162,6 +167,21 @@ namespace SchoolWeb.Controllers
             _db.SaveChanges();
 
             return RedirectToAction(nameof(Index));
+        }
+
+
+        // STUDENT SEARCH
+        public IActionResult SearchedStudent(string ID)
+        {
+            IEnumerable<Student> objStudentList = _db.Students;
+
+
+            if (!string.IsNullOrEmpty(ID))
+            {
+                objStudentList = objStudentList.Where(s => s.ID.Contains(ID));
+            }
+
+            return View(objStudentList.ToList());
         }
 
 
